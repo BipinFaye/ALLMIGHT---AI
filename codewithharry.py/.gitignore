@@ -1,0 +1,7 @@
+# Folders to ignore
+codewithharry.py/
+apnacollege.py/
+tables/
+__pycache__/
+.venv/
+.env
