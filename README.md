@@ -6,4 +6,4 @@ A voice-controlled AI assistant built with Python.
 2. Install requirements:
    `pip install -r requirements.txt`
 3. Run the main script:
-   `python "codewithharry.py/ALLMIGHT-AI.py"`
+   `python ALLMIGHT-AI.py`
