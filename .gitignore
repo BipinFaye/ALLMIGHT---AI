@@ -4,4 +4,5 @@ apnacollege.py/
 tables/
 __pycache__/
 .venv/
-.env.vscode
+.env
+.vscode

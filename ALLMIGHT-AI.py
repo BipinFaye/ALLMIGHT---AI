@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 #________setup________
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
-warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=UserWarning, module='pkg_resources')
 
 load_dotenv()
 pygame.mixer.init()
@@ -82,32 +82,45 @@ def process_command(c):
     print(f"---> You said: {c}")
     cmd = c.lower()
     if "play" in cmd:
-        song = cmd.replace("play", "").strip()
-        if song in music_library.music:
-            speak(f"Playing {song} from your library.")
-            link = music_library.music[song]
-            webbrowser.open(link)
+        song_found = None
+        for song in music_library.music:
+            if song in cmd:
+                song_found = song
+                break
+        
+        if song_found:
+            speak(f"Playing {song_found} from your library.")
+            webbrowser.open(music_library.music[song_found])
         else:
             import pywhatkit
-
-            speak(f"Playing {song} from YouTube.")
-            pywhatkit.playonyt(song)
+            search_query = cmd.replace("play", "").replace("the", "").replace("can", "").replace("you", "").replace("song", "").strip()
+            speak(f"Playing {search_query} from YouTube.")
+            pywhatkit.playonyt(search_query)
         return
 
     elif "open google" in cmd:
         speak("opening google")
         webbrowser.open("https://google.com")
-        return
+    elif "close google" in cmd:
+            speak("closing google")
+            os.system("taskkill /f /im chrome.exe ") #this command will close all tabs of Google Chrome
+            return
 
     elif "open youtube" in cmd:
         speak("opening youtube")
         webbrowser.open("https://youtube.com")
-        return
+    elif "close youtube" in cmd:
+            speak("closing youtube")
+            os.system("taskkill /f /im chrome.exe ")
+            return
 
     elif "open linkedin" in cmd:
         speak("opening linkedin")
         webbrowser.open("https://linkedin.com")
-        return
+    elif "close linkedin" in cmd:
+            speak("closing linkedin")
+            os.system("taskkill /f /im chrome.exe ")
+            return
 
     elif "news" in cmd:
         speak("here are the top news headlines")
@@ -152,8 +165,9 @@ if __name__ == "__main__":
             word = r.recognize_whisper(audio, language="en")
             print(f"DEBUG: I heard: '{word}'")
 
-            if "allmight" in word.lower():
+            if "allmight" in word.lower().replace(" ", "") or "ok" in word.lower().replace(" ", ""):
                 speak("Yes, sir?")
+                time.sleep(1)
 
                 active = True
                 while active:
