@@ -1,5 +1,5 @@
 """ 
-ALLMIGHT - A Voice Assistant /
+ALLMIGHT - A Voice Assistant 
 description: voice controlled AI assistant named "Allmight" that can perform various tasks 
              such as playing music, opening websitestand 
              user commands and text-tos, fetching news headlines, and interacting 
